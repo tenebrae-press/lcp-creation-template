@@ -1,0 +1,11 @@
+Game Content:
+  - "src/**"
+  - "templates/**"
+ 
+Infrastructure Changes:
+  - "scripts/*.json"
+  - ".github/**"
+  - ".vscode/**"
+  - "deps/**"
+  - "./*"
+  

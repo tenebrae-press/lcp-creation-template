@@ -1,0 +1,38 @@
+{
+  "name": "lancer-content-pack-template",
+  "version": "1.0.0",
+  "description": "LCP Template + Build Tools",
+  "main": "scripts/build.js",
+  "type": "module",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "engineStrict": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "unwrap": "node scripts/unzipToSource.js",
+    "upload-asset": "node scripts/uploadAsset.js",
+    "test": "node scripts/verify.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tenebrae-press/lcp-creation-template.git"
+  },
+  "author": "Tenebrae Press",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tenebrae-press/lcp-creation-template/issues"
+  },
+  "homepage": "https://github.com/tenebrae-press/lcp-creation-template#readme",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.58.0",
+    "ajv": "^8.11.0",
+    "html-minifier": "^4.0.0",
+    "json-format": "^1.0.1",
+    "jszip": "^3.9.0",
+    "mkdirp": "^1.0.4",
+    "rimraf": "^3.0.2",
+    "yargs": "^17.4.0",
+    "simple-git": "^3.5.0"
+  }
+}

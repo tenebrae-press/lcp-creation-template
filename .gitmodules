@@ -1,0 +1,3 @@
+[submodule "deps/vscode-comp-con-content-authoring"]
+	path = deps/vscode-comp-con-content-authoring
+	url = git@github.com:massif-press/vscode-comp-con-content-authoring.git

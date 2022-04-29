@@ -1,0 +1,4 @@
+build/
+*.lcp
+node_modules/
+.env

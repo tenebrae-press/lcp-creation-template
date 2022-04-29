@@ -1,0 +1,68 @@
+name: "Publish/Release"
+
+on:
+  push:
+    paths-ignore:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'scripts/**'
+      - 'templates/**'
+      - 'deps/**'
+      - '.github/**'
+    branches:
+      - master
+
+jobs:
+  tagged-release:
+    name: "Tagged Release"
+    runs-on: "ubuntu-latest"
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Package Install
+      run: npm ci
+    - name: Get Package Content
+      id: set_var
+      run: |
+          content=`node scripts/githubLCPVersion.js`
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=packageJson::$content"
+    - name: Build
+      run: npm run build
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        # Artifact name
+        name: "${{ fromJSON(steps.set_var.outputs.packageJson).name }}_${{ fromJSON(steps.set_var.outputs.packageJson).version }}.lcp"
+        path: "build/${{ fromJSON(steps.set_var.outputs.packageJson).name }}_${{ fromJSON(steps.set_var.outputs.packageJson).version }}.lcp"
+        if-no-files-found: error
+    - name: Publish to S3
+      env:
+        S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+        S3_REGION: ${{ secrets.S3_REGION }}
+        S3_BUCKET_PREFIX: ${{ secrets.S3_BUCKET_PREFIX }}
+        S3_KEY: ${{ secrets.S3_KEY }}
+        S3_SECRET: ${{ secrets.S3_SECRET }}
+      run: npm run upload-asset build/${{ fromJSON(steps.set_var.outputs.packageJson).name }}_${{ fromJSON(steps.set_var.outputs.packageJson).version }}.lcp
+    - name: Create Release
+      uses: "softprops/action-gh-release@v0.1.14"
+      with:
+        token: "${{ secrets.GITHUB_TOKEN }}"
+        tag_name: "v${{ fromJSON(steps.set_var.outputs.packageJson).version }}"
+        name: "Release ${{ fromJSON(steps.set_var.outputs.packageJson).version }}"
+        fail_on_unmatched_files: true
+        files: |
+          build/${{ fromJSON(steps.set_var.outputs.packageJson).name }}_${{ fromJSON(steps.set_var.outputs.packageJson).version }}.lcp
+
