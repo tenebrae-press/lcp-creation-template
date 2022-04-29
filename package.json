@@ -29,7 +29,7 @@
     "ajv": "^8.11.0",
     "html-minifier": "^4.0.0",
     "json-format": "^1.0.1",
-    "jszip": "^3.9.0",
+    "jszip": "^3.9.1",
     "mkdirp": "^1.0.4",
     "rimraf": "^3.0.2",
     "yargs": "^17.4.0",
