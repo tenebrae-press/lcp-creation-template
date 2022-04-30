@@ -22,11 +22,11 @@ Run `npm run build` to generate the LCP from source. The resulting file can be l
 2. Load the resulting file into an editor [like our version of the web LCP editor](https://editor.tenebrae.press).
 3. Once you make your changes, save the resulting file back into the `build/` directory, preferably overwriting the existing build.
 4. Run `npm run unwrap` and the script will overwrite your existing `.json` files in the repository with your changes.
-5. Optionally you can run `npm run verify` to check the source JSON files against schemas from `massif-press/vscode-comp-con-content-authoring`.
+5. Optionally you can run `npm run test` to check the source JSON files against schemas from `massif-press/vscode-comp-con-content-authoring`.
 
 ### Running tests
 
-Run `npm run verify` to test your source files against schemas. You can add additional custom tests in `scripts/verify.js`
+Run `npm run test` to test your source files against schemas. You can add additional custom tests in `scripts/verify.js`
 
 ### Publishing assets and releases to S3 Storage
 
