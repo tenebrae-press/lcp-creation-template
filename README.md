@@ -38,7 +38,13 @@ You can create a `.env` file with the following environment variables in the for
 4. `S3_SECRET` - The API secret provided by your S3 service provider.
 5. (Optional) `S3_PATH_PREFIX` - The path to upload files to within S3. The directory will not be created automatically, so make sure it exists before uploading.
 
-These environment variables will be automatically
+These environment variables will be automatically imported by the asset upload script.
+
+To upload a file, simply run the following command: `npm run upload-assets -- --ct <file mimetype> --b <S3 Bucket Name> path/to/file.svg`
+Replace the argument to the `ct` flag with the mimetype of the file you're uploading, it will default to application/octet-stream otherwise.
+Replace the argument to the `b` flag with the name of the bucket where you want to upload.
+
+This script will append a custom header to the uploaded file that contains the current git revision at the time of uploading. This can be used to verify that you've uploaded the latest version of the file. Future iterations of this script will automate this process by comparing those headers.
 
 ### CI/CD
 

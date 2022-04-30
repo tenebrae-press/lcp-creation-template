@@ -19,7 +19,7 @@ const argv = yargs(process.argv)
     .option('bucket', {
         type: 'string',
         alias: 'b',
-        description: 'Destination bucket to upload the object to, defaults to "tenebrae".'
+        description: 'Destination bucket to upload the object to".'
     })
     .option('contentType', {
         type: 'string',
@@ -70,7 +70,7 @@ const uploadFileToSpaces = async (filePath, options = {}) => {
     const keyPrefix = `${process.env.S3_PATH_PREFIX && process.env.S3_PATH_PREFIX !== '' ? process.env.S3_PATH_PREFIX + '/' : ''}`;
 
     const params = {
-        Bucket: options.targetBucket,
+        Bucket: options.bucket,
         Key: `${keyPrefix}${path.basename(absFilePath)}`,
         Body: await readFile(absFilePath),
         ACL: options.visibility ?? "public-read",
