@@ -6,7 +6,7 @@ import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import yargs from 'yargs';
 import dotenv from 'dotenv';
 
-import { bail } from './common.js';
+import { bail, warn } from './common.js';
 
 dotenv.config();
 
@@ -45,8 +45,8 @@ const uploadFileToSpaces = async (filePath, options = {}) => {
     } else if (process.env.S3_SECRET === undefined) {
         bail("-> Environment Variable S3_SECRET not defined! Aborting!");
     } else if (process.env.S3_PATH_PREFIX === undefined) {
-        bail("-> Environment Variable S3_PATH_PREFIX not defined! Aborting!");
-    } 
+        warn("-> Environment Variable S3_PATH_PREFIX not defined! Artifacts uploaded will be placed in the root of the bucket.");
+    }
 
     const absFilePath = path.resolve(filePath);
 
